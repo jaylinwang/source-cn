@@ -56,6 +56,12 @@
         </div>
     {{/if}}
 
+    {{#if @custom.enable_waline}}
+     <div id="waline" class="gh-comments gh-canvas gh-waline">
+        <div class="gh-comments-spin"></div>
+     </div>
+    {{/if}}
+
 </main>
 
 {{/post}}

@@ -10,6 +10,12 @@
     {{!-- Preload main styles and scripts for better performance --}}
     <link rel="preload" as="style" href="{{asset "built/screen.css"}}">
     <link rel="preload" as="script" href="{{asset "built/source.js"}}">
+    
+    {{#if @custom.enable_waline}}
+        {{#is "post, page"}}
+            <link rel="stylesheet" type="text/css" href="{{asset "waline/waline.css"}}">
+        {{/is}}
+    {{/if}}
 
     {{!-- Theme assets - use the {{asset}} helper to reference styles & scripts, this will take care of caching and cache-busting automatically --}}
     <link rel="stylesheet" type="text/css" href="{{asset "built/screen.css"}}">
@@ -58,12 +64,20 @@
 {{!-- Scripts - handle responsive videos, infinite scroll, and navigation dropdowns --}}
 <script src="{{asset "built/source.js"}}"></script>
 
+{{#if @custom.enable_waline}}
+{{#is "post, page"}}
+<script type="module">
+    import { init } from '{{asset "waline/waline.js"}}';
+    init({
+        el: '#waline',
+        serverURL: '{{@custom.waline_server_url}}',
+        lang: 'zh',
+    });
+</script>
+{{/is}}
+{{/if}}
+
 {{!-- Ghost outputs required functional scripts with this tag, it should always be the last thing before the closing body tag --}}
 {{ghost_foot}}
-
-<form data-members-form>
-  <input data-members-email type="email" required="true"/>
-  <button type="submit">Continue</button>
-</form>
 </body>
 </html>
